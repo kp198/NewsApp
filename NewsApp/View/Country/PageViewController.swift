@@ -18,6 +18,7 @@ class TopTabController: UIPageViewController {
     }
     let country: String?
     let sources:SourcesViewController
+    let pageControl = UIPageControl.init()
     
     init( country: String?) {
         self.country = country
@@ -39,11 +40,14 @@ class TopTabController: UIPageViewController {
         self.dataSource = self
         self.delegate = self
         self.setViewControllers([countryHeadlines], direction: .forward, animated: true)
-        let pageControl = UIPageControl.init()
+        
         self.view.addSubview(pageControl)
         pageControl.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([pageControl.bottomAnchor.constraint(equalTo: self.view.bottomAnchor), pageControl.heightAnchor.constraint(equalToConstant: 20), pageControl.centerXAnchor.constraint(equalTo: self.view.centerXAnchor), pageControl.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.5)])
+        pageControl.numberOfPages = 2
+        pageControl.currentPage = 0
+        NSLayoutConstraint.activate([pageControl.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 10), pageControl.heightAnchor.constraint(equalToConstant: 20), pageControl.centerXAnchor.constraint(equalTo: self.view.centerXAnchor), pageControl.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.5)])
         pageControl.currentPageIndicatorTintColor = .gray
+        pageControl.pageIndicatorTintColor = .lightGray
         
     }   
 }
@@ -63,5 +67,13 @@ extension TopTabController: UIPageViewControllerDelegate, UIPageViewControllerDa
             return sources
         }
         return countryHeadlines
+    }
+    
+    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+        if completed {
+            if let vc = pageViewController.viewControllers?.first {
+                pageControl.currentPage = (vc as? HeadlinesViewController != nil) ? 0 : 1
+            }
+        }
     }
 }
