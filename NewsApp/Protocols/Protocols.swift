@@ -10,9 +10,9 @@ import UIKit
 
 protocol HeadlineViewToPresenterProtocol: AnyObject {
     var viewDelegate: HeadlinePresenterToViewProtocol? {get set}
-    func fetchHeadlines(parameters: [String:String],completion: @escaping(Article, Error?)->Void)
+    func fetchHeadlines(parameters: [String:String],completion: @escaping(Article?, Error?)->Void)
     func showExpandedNews(content: String?)
-    func fetchSearchFrom(parameters: [String:String],completion: @escaping (Article, Error?) -> Void)
+    func fetchSearchFrom(parameters: [String:String],completion: @escaping (Article?, Error?) -> Void)
 }
 
 protocol HeadlinePresenterToViewProtocol: AnyObject {
@@ -25,5 +25,5 @@ protocol TableToViewControllerProtocol: AnyObject {
 
 
 protocol SourceToPresenter: AnyObject {
-    func getSourceList(parameters: [String:String],completion: @escaping([Source], Error?)->Void)
+    func getSourceList(parameters: [String:String],completion: @escaping([Source]?, Error?)->Void)
 }

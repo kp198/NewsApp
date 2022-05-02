@@ -27,7 +27,7 @@ class NetworkRequest {
         URLSession.shared.dataTask(with: urlComponents.url!,completionHandler: completion).resume()
     }
     
-    func sendRequest<T:Codable>(urlStr: String, parameters: [String:String]? = nil, method: HttpMethod,codableClass: T.Type, completion: @escaping(T, Error?) -> Void) {
+    func sendRequest<T:Codable>(urlStr: String, parameters: [String:String]? = nil, method: HttpMethod,codableClass: T.Type, completion: @escaping(T?, Error?) -> Void) {
          let apiKey = "f5ba7d67e5ae4824853660e33d45f886"
          guard var urlComponents = URLComponents.init(string: urlStr) else {return}
         urlComponents.queryItems = [URLQueryItem.init(name: "apiKey", value: apiKey)]
@@ -40,6 +40,8 @@ class NetworkRequest {
              if let data = data ,
                 let decoded = try? decoder.decode(T.self, from: data) {
                  completion(decoded,nil)
+             } else {
+                 completion(nil,NSError.init(domain: "Issue", code: 500))
              }
             
          }).resume()

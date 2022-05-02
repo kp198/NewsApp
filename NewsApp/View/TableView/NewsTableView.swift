@@ -73,12 +73,15 @@ class NewsTableView: UITableView {
     func fetchHeadlines() {
         presenter?.fetchHeadlines(parameters: constructParamList(), completion: { [weak self]
             articles, err in
-            self?.totalRes = articles.totalResults ?? self?.totalRes ?? 20
-            print(articles.articles.count,self?.headlines?.count,"Niiiii")// self?.articles.articles.count,self?.headlines?.count,"Niiiii")
+            if err != nil || articles == nil{
+                return
+            }
+            self?.totalRes = articles?.totalResults ?? self?.totalRes ?? 20
+            print(articles?.articles.count,self?.headlines?.count,"Niiiii")// self?.articles.articles.count,self?.headlines?.count,"Niiiii")
             if self?.headlines == nil || self?.type == .Search {
                 self?.headlines = []
             }
-            self?.headlines?.append(contentsOf: articles.articles)
+            self?.headlines?.append(contentsOf: articles!.articles)
             
         })
     }
@@ -86,11 +89,14 @@ class NewsTableView: UITableView {
     func fetchSearchFrom() {
         presenter?.fetchSearchFrom(parameters: constructParamList(), completion: { [weak self]
             articles, err in
-            self?.totalRes = articles.totalResults ?? self?.totalRes ?? 20
+            if err != nil || articles == nil {
+                return
+            }
+            self?.totalRes = articles?.totalResults ?? self?.totalRes ?? 20
             if self?.headlines == nil {
                 self?.headlines = []
             }
-            self?.headlines?.append(contentsOf: articles.articles)
+            self?.headlines?.append(contentsOf: articles!.articles)
             DispatchQueue.main.async {
                 self?.reloadData()
             }

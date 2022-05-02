@@ -20,11 +20,11 @@ class HeadlinePresenter:HeadlineViewToPresenterProtocol, SourceToPresenter {
         router.presenter = self
     }
     
-    func fetchHeadlines(parameters: [String:String],completion: @escaping (Article, Error?) -> Void) {
+    func fetchHeadlines(parameters: [String:String],completion: @escaping (Article?, Error?) -> Void) {
         networkReq.sendRequest(urlStr: "https://newsapi.org/v2/top-headlines", parameters: parameters, method: .get, codableClass: Article.self, completion: completion)
     }
     
-    func fetchSearchFrom(parameters: [String:String],completion: @escaping (Article, Error?) -> Void) {
+    func fetchSearchFrom(parameters: [String:String],completion: @escaping (Article?, Error?) -> Void) {
         networkReq.sendRequest(urlStr: "https://newsapi.org/v2/everything", parameters: parameters, method: .get, codableClass: Article.self, completion: completion)
     }
     
@@ -44,10 +44,10 @@ class HeadlinePresenter:HeadlineViewToPresenterProtocol, SourceToPresenter {
         viewDelegate?.present(viewController: router.getExpandedNews(content: content))
     }
     
-    func getSourceList(parameters: [String:String],completion: @escaping([Source], Error?) -> Void) {
+    func getSourceList(parameters: [String:String],completion: @escaping([Source]?, Error?) -> Void) {
         networkReq.sendRequest(urlStr: "https://newsapi.org/v2/top-headlines/sources",parameters: parameters, method: .get, codableClass: NewsSource.self, completion: {
             newsSource, err in
-            completion(newsSource.sources ?? [],err)
+            completion(newsSource?.sources ?? [],err)
         })
     }
 }
