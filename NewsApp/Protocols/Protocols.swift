@@ -23,3 +23,7 @@ protocol TableToViewControllerProtocol: AnyObject {
     func getSearchText() -> String
 }
 
+
+protocol SourceToPresenter: AnyObject {
+    func getSourceList(parameters: [String:String],completion: @escaping([Source], Error?)->Void)
+}
