@@ -36,25 +36,16 @@ class TopTabController: UIPageViewController {
         countryHeadlines.view.backgroundColor = .red
         sources.view.backgroundColor = .gray
         
-        topTabSetup()
         self.dataSource = self
         self.delegate = self
         self.setViewControllers([countryHeadlines], direction: .forward, animated: true)
-    }
-    
-    func topTabSetup() {
-        let topHeadlines = UIButton.init()
-        self.view.addSubview(topHeadlines)
-        topHeadlines.translatesAutoresizingMaskIntoConstraints = false
-        let sources = UIButton.init()
-        self.view.addSubview(sources)
-        sources.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([topHeadlines.topAnchor.constraint(equalTo: self.topLayoutGuide.bottomAnchor, constant: 20), topHeadlines.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.5), topHeadlines.heightAnchor.constraint(equalToConstant: 40), topHeadlines.leadingAnchor.constraint(equalTo: self.view.leadingAnchor)])
+        let pageControl = UIPageControl.init()
+        self.view.addSubview(pageControl)
+        pageControl.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([pageControl.bottomAnchor.constraint(equalTo: self.view.bottomAnchor), pageControl.heightAnchor.constraint(equalToConstant: 20), pageControl.centerXAnchor.constraint(equalTo: self.view.centerXAnchor), pageControl.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.5)])
+        pageControl.currentPageIndicatorTintColor = .gray
         
-        NSLayoutConstraint.activate([sources.topAnchor.constraint(equalTo: self.topLayoutGuide.bottomAnchor, constant: 20), sources.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.5), sources.heightAnchor.constraint(equalToConstant: 40), sources.leadingAnchor.constraint(equalTo: topHeadlines.trailingAnchor)])
-    }
-    
-    
+    }   
 }
 
 extension TopTabController: UIPageViewControllerDelegate, UIPageViewControllerDataSource {

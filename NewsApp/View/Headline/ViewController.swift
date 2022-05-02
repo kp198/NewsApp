@@ -31,9 +31,12 @@ class HeadlinesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .gray
-        self.setUpTable()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.setUpTable()
+    }
     
     func setUpTable() {
         table.register(UITableViewCell.self, forCellReuseIdentifier: "cell")

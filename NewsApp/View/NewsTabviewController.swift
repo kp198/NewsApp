@@ -14,13 +14,13 @@ class NewsTabViewController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .green
-        setupTabViewControllers()
         setUpTabbarItems()
+        
+        setupTabViewControllers()
     }
     
     func setupTabViewControllers() {
-        self.viewControllers = [presenter.getHeadlineView()]//,presenter.getCountryView(), presenter.getSearchView()]
+        self.viewControllers = [presenter.getHeadlineView(),presenter.getCountryView(), presenter.getSearchView()]
     }
     
     func setUpTabbarItems() {
